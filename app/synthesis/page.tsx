@@ -82,171 +82,160 @@ export default function SynthesisPage() {
   const colorLabel = ENERGY_COLORS.find(c => c.value === session.energyColor)?.label;
 
   return (
-    <main className="min-h-screen flex flex-col px-6 py-10">
+    <main className="min-h-screen flex flex-col px-6 py-10" style={{ background: "#FAF8F5" }}>
       <div className="max-w-2xl mx-auto w-full">
-        <div className="animate-fade-up">
-          <p className="text-[#C4975A] text-xs uppercase tracking-[0.2em] mb-2">
-            Mode 2 — Post-Session
-          </p>
-          <h1 className="text-4xl font-normal text-[#FAF8F5] mb-1">
-            Session Synthesis
-          </h1>
+        <div className="animate-fade-up mb-8">
+          <p className="label-gold mb-2">Mode 2 — Post-Session</p>
+          <h1 className="text-4xl font-normal mb-1">Session Synthesis</h1>
           <div className="gold-line my-4 w-24" />
-          <p className="text-[#FAF8F5]/40 text-sm mb-8">
+          <p className="text-sm" style={{ color: "#7a7470" }}>
             5 minutes. What happened in the room today?
           </p>
         </div>
 
         {/* Session snapshot */}
-        <div className="animate-fade-up delay-1 glass-card rounded-xl p-5 mb-6 space-y-2">
-          <p className="text-[#C4975A]/70 text-xs uppercase tracking-widest mb-3">Session Snapshot</p>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+        <div className="animate-fade-up delay-1 card-brand p-5 mb-6">
+          <p className="label-teal mb-4">Session Snapshot</p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
             <div>
-              <span className="text-[#FAF8F5]/30 text-xs">Client</span>
-              <p className="text-[#FAF8F5]">{session.clientName}</p>
+              <p className="label-muted mb-0.5">Client</p>
+              <p className="font-medium">{session.clientName}</p>
             </div>
             <div>
-              <span className="text-[#FAF8F5]/30 text-xs">Session</span>
-              <p className="text-[#FAF8F5]">
+              <p className="label-muted mb-0.5">Session</p>
+              <p className="font-medium">
                 {session.sessionNumber ? `#${session.sessionNumber}` : "—"} · {session.sessionDate}
               </p>
             </div>
             <div>
-              <span className="text-[#FAF8F5]/30 text-xs">Opening Scale</span>
-              <p className="text-[#FAF8F5]">{session.openingScale} / 10</p>
+              <p className="label-muted mb-0.5">Opening Scale</p>
+              <p className="font-medium">{session.openingScale} / 10</p>
             </div>
             <div>
-              <span className="text-[#FAF8F5]/30 text-xs">Closing Scale</span>
-              <p className="text-[#FAF8F5]">{session.closingScale} / 10</p>
+              <p className="label-muted mb-0.5">Closing Scale</p>
+              <p className="font-semibold" style={{ color: session.closingScale < session.openingScale ? "#177E89" : "#2D2D2D" }}>
+                {session.closingScale} / 10
+                {session.closingScale < session.openingScale && (
+                  <span className="ml-2 text-xs font-normal" style={{ color: "#177E89" }}>↓ shift</span>
+                )}
+              </p>
             </div>
             {bodyLabels && (
               <div className="col-span-2">
-                <span className="text-[#FAF8F5]/30 text-xs">Body Location</span>
-                <p className="text-[#FAF8F5]">{bodyLabels}</p>
-              </div>
-            )}
-            {session.energyShape && (
-              <div>
-                <span className="text-[#FAF8F5]/30 text-xs">Energy Shape</span>
-                <p className="text-[#FAF8F5]">{session.energyShape}</p>
+                <p className="label-muted mb-0.5">Body Location</p>
+                <p>{bodyLabels}</p>
               </div>
             )}
             {colorLabel && (
               <div>
-                <span className="text-[#FAF8F5]/30 text-xs">Energy Colour</span>
+                <p className="label-muted mb-0.5">Energy Colour</p>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full" style={{ background: session.energyColor }} />
-                  <p className="text-[#FAF8F5]">{colorLabel}</p>
+                  <p>{colorLabel}</p>
                 </div>
+              </div>
+            )}
+            {session.energyShape && (
+              <div>
+                <p className="label-muted mb-0.5">Energy Shape</p>
+                <p>{session.energyShape}</p>
               </div>
             )}
           </div>
         </div>
 
-        {/* Synthesis prompts */}
         <div className="animate-fade-up delay-2 space-y-5">
-          {/* Pattern surfaced */}
-          <div className="glass-card rounded-xl p-5">
-            <label className="block text-[#FAF8F5]/60 text-xs uppercase tracking-widest mb-3">
-              What core pattern surfaced?
-            </label>
+          {/* Pattern */}
+          <div className="card-brand p-5">
+            <p className="label-wine mb-3">What core pattern surfaced?</p>
             <div className="grid grid-cols-1 gap-2">
               {PATTERNS.map(p => (
                 <button
                   key={p}
                   onClick={() => updateSession({ patternSurfaced: p })}
-                  className="text-left px-3 py-2 rounded-lg text-xs transition-all"
-                  style={{
-                    background: session.patternSurfaced === p ? "rgba(105,29,51,0.35)" : "rgba(255,255,255,0.03)",
-                    border: session.patternSurfaced === p ? "1px solid rgba(196,151,90,0.4)" : "1px solid rgba(196,151,90,0.08)",
-                    color: session.patternSurfaced === p ? "#C4975A" : "rgba(250,248,245,0.55)",
-                  }}
+                  className={`chip chip-wine text-left ${session.patternSurfaced === p ? "selected-wine" : ""}`}
                 >
-                  {session.patternSurfaced === p && "● "}{p}
+                  {session.patternSurfaced === p && <span className="mr-1.5 text-[10px]">●</span>}
+                  {p}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Shift observed */}
-          <div className="glass-card rounded-xl p-5">
-            <label className="block text-[#FAF8F5]/60 text-xs uppercase tracking-widest mb-3">
-              What shift did you observe?
-            </label>
+          {/* Shift */}
+          <div className="card-brand p-5">
+            <p className="label-teal mb-3">What shift did you observe?</p>
             <div className="grid grid-cols-1 gap-2">
               {SHIFTS.map(s => (
                 <button
                   key={s}
                   onClick={() => updateSession({ shiftObserved: s })}
-                  className="text-left px-3 py-2 rounded-lg text-xs transition-all"
-                  style={{
-                    background: session.shiftObserved === s ? "rgba(23,126,137,0.2)" : "rgba(255,255,255,0.03)",
-                    border: session.shiftObserved === s ? "1px solid rgba(23,126,137,0.4)" : "1px solid rgba(196,151,90,0.08)",
-                    color: session.shiftObserved === s ? "#1a9aa7" : "rgba(250,248,245,0.55)",
-                  }}
+                  className={`chip text-left ${session.shiftObserved === s ? "selected" : ""}`}
                 >
-                  {session.shiftObserved === s && "● "}{s}
+                  {session.shiftObserved === s && <span className="mr-1.5 text-[10px]">●</span>}
+                  {s}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Inspired actions (if not captured during session) */}
+          {/* Inspired actions */}
           {!session.inspiredActions && (
-            <div className="glass-card rounded-xl p-5">
-              <label className="block text-[#FAF8F5]/60 text-xs uppercase tracking-widest mb-3">
-                What inspired action did the client name?
-              </label>
+            <div className="card-brand p-5">
+              <p className="label-gold mb-3">What inspired action did the client name?</p>
               <textarea
                 value={session.inspiredActions}
                 onChange={e => updateSession({ inspiredActions: e.target.value })}
                 placeholder="What one action called to them from today's session?"
                 rows={2}
-                className="w-full px-3 py-2 rounded-lg text-[#FAF8F5] placeholder-[#FAF8F5]/20 text-sm outline-none resize-none"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(196,151,90,0.1)" }}
+                className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none"
+                style={{
+                  background: "#f5f2ee",
+                  border: "1px solid rgba(23,126,137,0.15)",
+                  color: "#2D2D2D",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                }}
               />
             </div>
           )}
 
           {/* Coach notes */}
-          <div className="glass-card rounded-xl p-5">
-            <label className="block text-[#FAF8F5]/60 text-xs uppercase tracking-widest mb-3">
-              Coach observations (private — not in client report)
-            </label>
+          <div className="card-brand p-5">
+            <p className="label-muted mb-3">Coach observations (private — not in client report)</p>
             <textarea
               value={session.coachNotes}
               onChange={e => updateSession({ coachNotes: e.target.value })}
               placeholder="Anything you want to remember about this session..."
               rows={3}
-              className="w-full px-3 py-2 rounded-lg text-[#FAF8F5] placeholder-[#FAF8F5]/20 text-sm outline-none resize-none"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(196,151,90,0.1)" }}
+              className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none"
+              style={{
+                background: "#f5f2ee",
+                border: "1px solid rgba(23,126,137,0.15)",
+                color: "#2D2D2D",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
             />
           </div>
         </div>
 
         {error && (
-          <div className="mt-4 px-4 py-3 rounded-lg text-sm text-red-300"
-            style={{ background: "rgba(192,57,43,0.15)", border: "1px solid rgba(192,57,43,0.3)" }}>
+          <div
+            className="mt-4 px-4 py-3 rounded-xl text-sm"
+            style={{ background: "rgba(192,57,43,0.08)", border: "1px solid rgba(192,57,43,0.25)", color: "#c0392b" }}
+          >
             {error}
           </div>
         )}
 
         <div className="mt-8 flex gap-4">
-          <button
-            onClick={() => router.push(`/session/${10}`)}
-            className="px-6 py-3 rounded-full text-xs uppercase tracking-widest text-[#FAF8F5]/40 hover:text-[#FAF8F5]/70 transition-all"
-            style={{ border: "1px solid rgba(196,151,90,0.15)" }}
-          >
-            ← Back to Session
+          <button onClick={() => router.push("/session/10")} className="btn-secondary">
+            ← Back
           </button>
           <button
             onClick={handleGenerate}
             disabled={generating || !session.patternSurfaced || !session.shiftObserved}
-            className="flex-1 py-4 rounded-full text-sm tracking-widest uppercase font-medium transition-all disabled:opacity-30"
-            style={{
-              background: "linear-gradient(135deg, #691d33, #8a2642)",
-              border: "1px solid rgba(196,151,90,0.3)",
-            }}
+            className="btn-primary flex-1"
+            style={{ borderRadius: "9999px" }}
           >
             {generating ? "Generating Report..." : "Generate Client Report →"}
           </button>

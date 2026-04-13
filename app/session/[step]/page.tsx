@@ -32,7 +32,6 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
   }
 
   function handleNext() {
-    // Save reflection if applicable
     if (reflection.trim()) {
       const key = stepNum === 7 ? "energyDialogue"
         : stepNum === 8 ? "transformation"
@@ -63,96 +62,71 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
   const progress = (stepNum / PROTOCOL_STEPS.length) * 100;
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col" style={{ background: "#FAF8F5" }}>
       {/* Progress bar */}
       <div className="fixed top-0 left-0 right-0 z-50">
-        <div className="h-[2px] bg-[rgba(196,151,90,0.1)]">
-          <div
-            className="h-full transition-all duration-700 ease-in-out"
-            style={{
-              width: `${progress}%`,
-              background: "linear-gradient(90deg, #691d33, #C4975A)",
-            }}
-          />
+        <div style={{ height: "3px", background: "#e5e0db" }}>
+          <div className="progress-bar" style={{ width: `${progress}%` }} />
         </div>
       </div>
 
       {/* Header */}
-      <div className="flex items-center justify-between px-6 pt-8 pb-4">
+      <div
+        className="flex items-center justify-between px-6 pt-8 pb-5"
+        style={{ borderBottom: "1px solid rgba(23,126,137,0.1)" }}
+      >
         <div>
-          <p className="text-[#C4975A]/60 text-xs uppercase tracking-widest">
-            Step {stepNum} of {PROTOCOL_STEPS.length}
-          </p>
-          <h2 className="text-[#FAF8F5]/30 text-sm mt-0.5">
-            with {session.clientName}
-          </h2>
+          <p className="label-gold mb-0.5">Step {stepNum} of {PROTOCOL_STEPS.length}</p>
+          <h3 className="text-base font-normal" style={{ fontFamily: "'Playfair Display', serif", color: "#2D2D2D" }}>
+            Session with {session.clientName}
+          </h3>
         </div>
         <button
-          onClick={() => { setHolding(h => !h); }}
-          className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest transition-all ${holding ? "holding" : ""}`}
+          onClick={() => setHolding(h => !h)}
+          className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${holding ? "holding" : ""}`}
           style={{
-            background: holding ? "rgba(196,151,90,0.2)" : "rgba(255,255,255,0.04)",
-            border: holding ? "1px solid rgba(196,151,90,0.5)" : "1px solid rgba(196,151,90,0.15)",
-            color: holding ? "#C4975A" : "rgba(250,248,245,0.4)",
+            background: holding ? "rgba(196,151,90,0.12)" : "rgba(23,126,137,0.06)",
+            border: holding ? "1px solid rgba(196,151,90,0.5)" : "1px solid rgba(23,126,137,0.2)",
+            color: holding ? "#C4975A" : "#177E89",
+            letterSpacing: "0.08em",
           }}
         >
           {holding ? "● Holding" : "Hold Here"}
         </button>
       </div>
 
-      <div className="gold-line mx-6" />
-
-      {/* Main content */}
-      <div className="flex-1 flex flex-col px-6 py-6 max-w-2xl mx-auto w-full">
+      {/* Content */}
+      <div className="flex-1 px-6 py-8 max-w-2xl mx-auto w-full">
         <div className="animate-fade-up">
-          {/* Step identity */}
-          <div className="mb-8">
-            <p className="text-[#C4975A] text-xs uppercase tracking-[0.2em] mb-2">
-              {protocolStep.subtitle}
-            </p>
-            <h1 className="text-4xl font-normal text-[#FAF8F5] mb-1">
-              {protocolStep.title}
-            </h1>
+          {/* Step header */}
+          <div className="mb-7">
+            <p className="label-teal mb-2">{protocolStep.subtitle}</p>
+            <h1 className="text-4xl font-normal mb-1">{protocolStep.title}</h1>
             {protocolStep.duration && (
-              <p className="text-[#FAF8F5]/25 text-xs">{protocolStep.duration}</p>
+              <p className="text-xs" style={{ color: "#b0ada8" }}>{protocolStep.duration}</p>
             )}
           </div>
 
-          {/* Dual view: coach prompt + client focus */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            {/* Coach */}
-            <div
-              className="glass-card rounded-xl p-5"
-              style={{ borderColor: "rgba(105,29,51,0.3)" }}
-            >
-              <p className="text-[#8a2642] text-[10px] uppercase tracking-widest mb-3 font-medium">
-                Coach Guidance
-              </p>
-              <p className="text-[#FAF8F5]/80 text-sm leading-relaxed">
+          {/* Coach + Client panels */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="card-wine p-5">
+              <p className="label-wine mb-3">Coach Guidance</p>
+              <p className="text-sm leading-relaxed" style={{ color: "#3a3030" }}>
                 {protocolStep.coachPrompt}
               </p>
             </div>
-
-            {/* Client */}
-            <div
-              className="glass-card rounded-xl p-5"
-              style={{ borderColor: "rgba(23,126,137,0.2)" }}
-            >
-              <p className="text-[#177E89] text-[10px] uppercase tracking-widest mb-3 font-medium">
-                Client Experience
-              </p>
-              <p className="quote text-[#FAF8F5]/70 text-sm leading-relaxed">
+            <div className="card-brand p-5">
+              <p className="label-teal mb-3">Client Experience</p>
+              <p className="quote text-sm leading-relaxed" style={{ color: "#4a4a4a" }}>
                 &ldquo;{protocolStep.clientFocus}&rdquo;
               </p>
             </div>
           </div>
 
-          {/* Opening / Closing scale */}
+          {/* Scale */}
           {protocolStep.hasScale && (
-            <div className="glass-card rounded-xl p-5 mb-6">
-              <p className="text-[#FAF8F5]/60 text-xs uppercase tracking-widest mb-1">
-                {protocolStep.scaleLabel}
-              </p>
+            <div className="card-brand p-5 mb-5">
+              <p className="label-muted mb-1">{protocolStep.scaleLabel}</p>
               <div className="mt-4 space-y-2">
                 <input
                   type="range"
@@ -166,12 +140,12 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
                   }}
                   className="w-full"
                 />
-                <div className="flex justify-between text-[10px] text-[#FAF8F5]/30">
-                  <span>1 — Barely there</span>
-                  <span className="text-[#C4975A] font-medium text-sm">
+                <div className="flex justify-between">
+                  <span className="text-xs" style={{ color: "#b0ada8" }}>1 — Barely there</span>
+                  <span className="text-lg font-semibold" style={{ color: "#177E89" }}>
                     {stepNum === 1 ? session.openingScale : session.closingScale}
                   </span>
-                  <span>10 — Overwhelming</span>
+                  <span className="text-xs" style={{ color: "#b0ada8" }}>10 — Overwhelming</span>
                 </div>
               </div>
             </div>
@@ -179,7 +153,7 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
 
           {/* Body map */}
           {protocolStep.hasBodyMap && (
-            <div className="glass-card rounded-xl p-5 mb-6">
+            <div className="card-brand p-5 mb-5">
               <BodyMap
                 selected={session.bodyLocation}
                 onToggle={id => {
@@ -191,7 +165,7 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
                 }}
               />
               {session.bodyLocation.length > 0 && (
-                <p className="mt-3 text-[#C4975A]/60 text-xs">
+                <p className="mt-3 text-xs" style={{ color: "#177E89" }}>
                   {session.bodyLocation
                     .map(id => BODY_REGIONS.find(r => r.id === id)?.label)
                     .filter(Boolean)
@@ -203,7 +177,7 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
 
           {/* Energy selector */}
           {protocolStep.hasEnergySelector && (
-            <div className="glass-card rounded-xl p-5 mb-6">
+            <div className="card-brand p-5 mb-5">
               <EnergySelector
                 selectedColor={session.energyColor}
                 selectedShape={session.energyShape}
@@ -215,57 +189,54 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
             </div>
           )}
 
-          {/* Reflection capture for dialogue steps */}
+          {/* Reflection capture */}
           {protocolStep.reflection && (
-            <div className="glass-card rounded-xl p-5 mb-6">
-              <p className="text-[#FAF8F5]/50 text-xs uppercase tracking-widest mb-3">
-                Coach — what&apos;s surfacing? (optional notes)
-              </p>
+            <div className="card-brand p-5 mb-5">
+              <p className="label-muted mb-3">Coach — what&apos;s surfacing? (optional notes)</p>
               <textarea
                 value={reflection}
                 onChange={e => setReflection(e.target.value)}
                 placeholder={protocolStep.reflection}
                 rows={3}
-                className="w-full px-3 py-2 rounded-lg text-[#FAF8F5] placeholder-[#FAF8F5]/20 text-sm outline-none resize-none"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(196,151,90,0.1)" }}
+                className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none"
+                style={{
+                  background: "#f5f2ee",
+                  border: "1px solid rgba(23,126,137,0.15)",
+                  color: "#2D2D2D",
+                  fontFamily: "'Plus Jakarta Sans', sans-serif",
+                }}
               />
             </div>
           )}
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="sticky bottom-0 px-6 py-5" style={{ background: "rgba(26,22,22,0.9)", backdropFilter: "blur(12px)", borderTop: "1px solid rgba(196,151,90,0.1)" }}>
+      {/* Bottom nav */}
+      <div
+        className="sticky bottom-0 px-6 py-4"
+        style={{ background: "rgba(250,248,245,0.95)", backdropFilter: "blur(10px)", borderTop: "1px solid rgba(23,126,137,0.1)" }}
+      >
         <div className="max-w-2xl mx-auto flex items-center justify-between gap-4">
-          <button
-            onClick={handlePrev}
-            className="px-6 py-3 rounded-full text-xs uppercase tracking-widest transition-all text-[#FAF8F5]/40 hover:text-[#FAF8F5]/70"
-            style={{ border: "1px solid rgba(196,151,90,0.15)" }}
-          >
+          <button onClick={handlePrev} className="btn-secondary">
             ← Back
           </button>
 
-          <div className="flex gap-1">
+          {/* Step dots */}
+          <div className="flex gap-1 items-center">
             {PROTOCOL_STEPS.map((_, i) => (
               <div
                 key={i}
-                className="h-1 rounded-full transition-all"
+                className="rounded-full transition-all duration-300"
                 style={{
-                  width: i + 1 === stepNum ? "20px" : "6px",
-                  background: i + 1 <= stepNum ? "#C4975A" : "rgba(196,151,90,0.2)",
+                  width: i + 1 === stepNum ? "18px" : "6px",
+                  height: "6px",
+                  background: i + 1 <= stepNum ? "#177E89" : "rgba(23,126,137,0.2)",
                 }}
               />
             ))}
           </div>
 
-          <button
-            onClick={handleNext}
-            className="px-8 py-3 rounded-full text-xs uppercase tracking-widest transition-all font-medium"
-            style={{
-              background: "linear-gradient(135deg, #691d33, #8a2642)",
-              border: "1px solid rgba(196,151,90,0.3)",
-            }}
-          >
+          <button onClick={handleNext} className="btn-primary">
             {stepNum === PROTOCOL_STEPS.length ? "Complete →" : "Next →"}
           </button>
         </div>

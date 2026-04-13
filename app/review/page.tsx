@@ -24,28 +24,25 @@ export default function ReviewPage() {
   }
 
   return (
-    <main className="min-h-screen flex flex-col px-6 py-10">
+    <main className="min-h-screen flex flex-col px-6 py-10" style={{ background: "#FAF8F5" }}>
       <div className="max-w-2xl mx-auto w-full">
-        <div className="animate-fade-up">
-          <p className="text-[#C4975A] text-xs uppercase tracking-[0.2em] mb-2">
-            Review — Before Download
-          </p>
-          <h1 className="text-4xl font-normal text-[#FAF8F5] mb-1">
-            {session.clientName}&apos;s Report
-          </h1>
+        <div className="animate-fade-up mb-8">
+          <p className="label-gold mb-2">Review Before Download</p>
+          <h1 className="text-4xl font-normal mb-1">{session.clientName}&apos;s Report</h1>
           <div className="gold-line my-4 w-24" />
-          <p className="text-[#FAF8F5]/40 text-sm mb-8">
+          <p className="text-sm" style={{ color: "#7a7470" }}>
             Review and edit before your client receives this.
           </p>
         </div>
 
         {/* Session Summary */}
-        <div className="animate-fade-up delay-1 glass-card rounded-xl p-6 mb-6">
+        <div className="animate-fade-up delay-1 card-brand p-6 mb-5">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-[#177E89] text-xs uppercase tracking-widest font-medium">Session Summary</p>
+            <p className="label-teal">Session Summary</p>
             <button
               onClick={() => setEditing(editing === "summary" ? null : "summary")}
-              className="text-[#FAF8F5]/30 text-xs hover:text-[#C4975A] transition-colors"
+              className="text-xs font-medium transition-colors"
+              style={{ color: editing === "summary" ? "#177E89" : "#b0ada8" }}
             >
               {editing === "summary" ? "Done" : "Edit"}
             </button>
@@ -55,26 +52,29 @@ export default function ReviewPage() {
               value={session.sessionSummary || ""}
               onChange={e => updateSession({ sessionSummary: e.target.value })}
               rows={8}
-              className="w-full px-3 py-2 rounded-lg text-[#FAF8F5] text-sm outline-none resize-none leading-relaxed"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(196,151,90,0.15)" }}
+              className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none leading-relaxed"
+              style={{
+                background: "#f5f2ee",
+                border: "1px solid rgba(23,126,137,0.2)",
+                color: "#2D2D2D",
+                fontFamily: "'Plus Jakarta Sans', sans-serif",
+              }}
             />
           ) : (
-            <div className="text-[#FAF8F5]/80 text-sm leading-relaxed whitespace-pre-line">
+            <div className="text-sm leading-relaxed whitespace-pre-line" style={{ color: "#3a3a3a" }}>
               {session.sessionSummary}
             </div>
           )}
         </div>
 
         {/* Inner Child Letter */}
-        <div className="animate-fade-up delay-2 glass-card rounded-xl p-6 mb-6"
-          style={{ borderColor: "rgba(105,29,51,0.3)" }}>
+        <div className="animate-fade-up delay-2 card-wine p-6 mb-5">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-[#8a2642] text-xs uppercase tracking-widest font-medium">
-              A Letter to Your Inner Child
-            </p>
+            <p className="label-wine">A Letter to Your Inner Child</p>
             <button
               onClick={() => setEditing(editing === "letter" ? null : "letter")}
-              className="text-[#FAF8F5]/30 text-xs hover:text-[#C4975A] transition-colors"
+              className="text-xs font-medium transition-colors"
+              style={{ color: editing === "letter" ? "#691d33" : "#b0ada8" }}
             >
               {editing === "letter" ? "Done" : "Edit"}
             </button>
@@ -84,58 +84,55 @@ export default function ReviewPage() {
               value={session.innerChildLetter || ""}
               onChange={e => updateSession({ innerChildLetter: e.target.value })}
               rows={12}
-              className="w-full px-3 py-2 rounded-lg text-[#FAF8F5] text-sm outline-none resize-none leading-relaxed"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(196,151,90,0.15)" }}
+              className="w-full px-3 py-2 rounded-lg text-sm outline-none resize-none leading-relaxed"
+              style={{
+                background: "#fdf8f5",
+                border: "1px solid rgba(105,29,51,0.2)",
+                color: "#2D2D2D",
+                fontFamily: "'Lora', serif",
+                fontStyle: "italic",
+              }}
             />
           ) : (
-            <div className="quote text-[#FAF8F5]/80 text-sm leading-relaxed whitespace-pre-line">
+            <div className="quote text-sm leading-loose whitespace-pre-line" style={{ color: "#3a3030" }}>
               {session.innerChildLetter}
             </div>
           )}
         </div>
 
-        {/* Next Session Seeds */}
+        {/* Next Session Seeds (coach only) */}
         {session.nextSeedQuestions && (
-          <div className="animate-fade-up delay-3 glass-card rounded-xl p-6 mb-8">
-            <p className="text-[#C4975A]/70 text-xs uppercase tracking-widest mb-4">
-              Seeds for Next Session
-            </p>
-            <div className="text-[#FAF8F5]/60 text-sm leading-relaxed whitespace-pre-line">
+          <div className="animate-fade-up delay-3 rounded-xl p-5 mb-5"
+            style={{ background: "#f5f2ee", border: "1px solid rgba(196,151,90,0.2)" }}>
+            <p className="label-gold mb-3">Seeds for Next Session</p>
+            <div className="text-sm leading-relaxed whitespace-pre-line" style={{ color: "#5a5550" }}>
               {session.nextSeedQuestions}
             </div>
-            <p className="text-[#FAF8F5]/25 text-xs mt-3 italic">
+            <p className="text-xs mt-3 italic" style={{ color: "#b0ada8" }}>
               Coach only — not included in client report
             </p>
           </div>
         )}
 
-        {/* Inspired Actions */}
+        {/* Inspired Action */}
         {session.inspiredActions && (
-          <div className="animate-fade-up delay-3 glass-card rounded-xl p-5 mb-8">
-            <p className="text-[#C4975A]/70 text-xs uppercase tracking-widest mb-2">
-              Your Inspired Action
-            </p>
-            <p className="text-[#FAF8F5]/80 text-sm leading-relaxed">
+          <div className="animate-fade-up delay-3 card-brand p-5 mb-8"
+            style={{ borderLeft: "3px solid #C4975A" }}>
+            <p className="label-gold mb-2">Inspired Action</p>
+            <p className="text-sm leading-relaxed" style={{ color: "#3a3a3a" }}>
               {session.inspiredActions}
             </p>
           </div>
         )}
 
         <div className="flex gap-4">
-          <button
-            onClick={() => router.push("/synthesis")}
-            className="px-6 py-3 rounded-full text-xs uppercase tracking-widest text-[#FAF8F5]/40 hover:text-[#FAF8F5]/70 transition-all"
-            style={{ border: "1px solid rgba(196,151,90,0.15)" }}
-          >
+          <button onClick={() => router.push("/synthesis")} className="btn-secondary">
             ← Revise
           </button>
           <button
             onClick={() => router.push("/complete")}
-            className="flex-1 py-4 rounded-full text-sm tracking-widest uppercase font-medium transition-all"
-            style={{
-              background: "linear-gradient(135deg, #177E89, #1a9aa7)",
-              border: "1px solid rgba(196,151,90,0.2)",
-            }}
+            className="btn-primary flex-1"
+            style={{ background: "#177E89", borderRadius: "9999px" }}
           >
             Looks Good — Complete →
           </button>

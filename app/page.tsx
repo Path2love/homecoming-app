@@ -12,6 +12,7 @@ export default function HomePage() {
     coachName: "Alison Verge",
     sessionNumber: "",
     sessionIntention: "",
+    sessionDate: new Date().toLocaleDateString("en-CA"),
   });
   const [imagoText, setImagoText] = useState("");
   const [imagoFile, setImagoFile] = useState<File | null>(null);
@@ -42,7 +43,7 @@ export default function HomePage() {
       ...EMPTY_SESSION,
       clientName: form.clientName.trim(),
       coachName: form.coachName.trim(),
-      sessionDate: new Date().toISOString().split("T")[0],
+      sessionDate: form.sessionDate,
       sessionNumber: form.sessionNumber ? parseInt(form.sessionNumber) : undefined,
       sessionIntention: form.sessionIntention.trim(),
       imago,
@@ -160,11 +161,10 @@ export default function HomePage() {
             <div>
               <label className="block label-muted mb-2">Date</label>
               <input
-                type="text"
-                value={new Date().toLocaleDateString("en-CA")}
-                readOnly
+                type="date"
+                value={form.sessionDate}
+                onChange={e => setForm(f => ({ ...f, sessionDate: e.target.value }))}
                 className="input-brand"
-                style={{ opacity: 0.6 }}
               />
             </div>
           </div>

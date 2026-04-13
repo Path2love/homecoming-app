@@ -107,19 +107,40 @@ export default function SessionPage({ params }: { params: Promise<{ step: string
             )}
           </div>
 
-          {/* Coach + Client panels */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="card-wine p-5">
-              <p className="label-wine mb-3">Coach Guidance</p>
-              <p className="text-sm leading-relaxed" style={{ color: "#3a3030" }}>
-                {protocolStep.coachPrompt}
-              </p>
+          {/* Coach Script */}
+          <div className="card-wine p-5 mb-4">
+            <p className="label-wine mb-3">Coach Script</p>
+            <div className="text-sm leading-relaxed whitespace-pre-line" style={{ color: "#3a3030" }}>
+              {protocolStep.coachScript}
             </div>
+          </div>
+
+          {/* Client focus + Coach notes side by side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div className="card-brand p-5">
-              <p className="label-teal mb-3">Client Experience</p>
+              <p className="label-teal mb-3">Client Screen</p>
               <p className="quote text-sm leading-relaxed" style={{ color: "#4a4a4a" }}>
                 &ldquo;{protocolStep.clientFocus}&rdquo;
               </p>
+            </div>
+            <div className="rounded-xl p-5" style={{ background: "#f5f2ee", border: "1px solid rgba(196,151,90,0.2)" }}>
+              <p className="label-gold mb-3">Coach Notes</p>
+              <p className="text-xs leading-relaxed" style={{ color: "#6a6460" }}>
+                {protocolStep.coachNotes}
+              </p>
+            </div>
+          </div>
+
+          {/* Follow-up questions */}
+          <div className="card-brand p-5 mb-4">
+            <p className="label-teal mb-3">Suggested Follow-Up Questions</p>
+            <div className="space-y-2">
+              {protocolStep.followUpQuestions.map((q, i) => (
+                <div key={i} className="flex gap-3 items-start">
+                  <span className="text-xs font-semibold mt-0.5 flex-shrink-0" style={{ color: "#177E89" }}>{i + 1}</span>
+                  <p className="text-sm" style={{ color: "#4a4a4a" }}>{q}</p>
+                </div>
+              ))}
             </div>
           </div>
 

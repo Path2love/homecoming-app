@@ -169,17 +169,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div>
-            <label className="block label-muted mb-2">Session Intention</label>
-            <input
-              type="text"
-              value={form.sessionIntention}
-              onChange={e => setForm(f => ({ ...f, sessionIntention: e.target.value }))}
-              placeholder="What does the client want to release today?"
-              className="input-brand"
-            />
-          </div>
-
           {/* Imago Summary */}
           <div>
             <label className="block label-muted mb-2">Imago Summary (optional)</label>

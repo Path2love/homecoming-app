@@ -2,16 +2,18 @@ export interface ProtocolStep {
   id: number;
   title: string;
   subtitle: string;
-  coachScript: string;       // Full word-for-word script Alison speaks
-  coachNotes: string;        // Background coaching notes / what to watch for
-  clientFocus: string;       // What client sees on screen
-  followUpQuestions: string[]; // Suggested deepening questions
+  coachScript: string;
+  coachNotes: string;
+  clientFocus: string;
+  followUpQuestions?: string[]; // Only on dialogue steps — hidden during relaxation
   hasBodyMap?: boolean;
   hasEnergySelector?: boolean;
   hasScale?: boolean;
+  hasCoachNotes?: boolean; // Whether coach can jot notes on this step
   scaleLabel?: string;
   reflection?: string;
   duration?: string;
+  isRelaxation?: boolean; // Steps 2-4: no follow-up questions, pure script
 }
 
 export const PROTOCOL_STEPS: ProtocolStep[] = [
@@ -25,30 +27,29 @@ export const PROTOCOL_STEPS: ProtocolStep[] = [
     scaleLabel: "How intense does this feel right now? (1 = barely there, 10 = overwhelming)",
     coachScript: `"Welcome. I'm really glad you're here today.
 
-Before we begin, I want you to take one full breath with me. In through the nose... and out through the mouth. Good.
+Before we begin, take one full breath with me. In through the nose... and out through the mouth. Good.
 
-This space is yours. There is nothing to perform here, nothing to get right, nothing to figure out. We're just going to be here together and see what wants to move.
+This space is yours. There is nothing to perform here, nothing to get right. We're going to be here together and see what wants to move.
 
 So — what is it that you're carrying today? What brought you here?
 
-[Pause. Let them speak. Reflect back what you hear without interpreting.]
+[Pause. Let them speak fully. Reflect back what you hear without interpreting.]
 
 And if you had to name what you most want to release or shift in our time together today — what would that be?
 
 [Pause. Let them name it clearly.]
 
-Thank you for naming that. That took courage.
+Thank you for naming that.
 
-Now, on a scale of 1 to 10 — 1 being this is barely a whisper and 10 being it's overwhelming you right now — where does that feel like it's sitting in your body today?
+Now, on a scale of 1 to 10 — 1 being this barely registers and 10 being it's overwhelming you right now — where does that feel like it's sitting in your body today?
 
-[Record the number. Note their body language.]
+[Record the number. Note body language and breath quality.]
 
 Good. We're going to work with that. Let's begin."`,
-    coachNotes: `Watch for: resistance in the body (crossed arms, shallow breath, held jaw). Don't rush the intention-setting — the quality of what they name here shapes the entire session. If they give a vague answer ("I want to feel better"), gently probe: "And what does 'better' feel like in your body? What would you feel that you're not feeling now?"`,
+    coachNotes: `Watch for: resistance in the body (crossed arms, shallow breath, held jaw). Don't rush the intention. If they give a vague answer like "I want to feel better," probe: "And what does 'better' feel like in your body? What would you be feeling that you're not feeling now?"`,
     followUpQuestions: [
       "When you feel that in your body right now, where does it live?",
       "How long have you been carrying this?",
-      "If this had a name — not a label, just a name — what would it be?",
       "What would it mean for you if this shifted today?",
       "On a scale of 1–10, how ready does your body feel to let some of this go?",
     ],
@@ -58,88 +59,81 @@ Good. We're going to work with that. Let's begin."`,
     title: "Settling the Body",
     subtitle: "Progressive Relaxation",
     duration: "5–8 min",
+    isRelaxation: true,
     clientFocus: "Let your body get heavy. Nothing to do. Nowhere to be.",
-    coachScript: `"Good. Now I'd like you to gently close your eyes, or soften your gaze to the floor — whatever feels comfortable.
+    coachScript: `"Good. Now gently close your eyes, or soften your gaze to the floor — whatever feels comfortable.
 
 Begin to let your breath slow down. You don't need to breathe deeply or perfectly. Just... naturally slower. Let the exhale be a little longer than the inhale.
 
 [Pause 10 seconds.]
 
-Now bring your attention down to your feet. Notice them. The floor beneath them. The weight of them. Just let your feet be heavy. Let them soften and release.
+Bring your attention down to your feet. Notice them. The floor beneath them. The weight of them. Just let your feet be heavy. Let them soften and release.
 
 Let that heaviness travel slowly up into your ankles... your calves... the backs of your knees. Heavy. Relaxed. Not held.
 
-Up into your thighs and hips. You don't need to hold yourself up right now. Let the chair or the cushion hold you completely.
+Up into your thighs and hips. You don't need to hold yourself up right now. Let the chair hold you completely.
 
-Let your belly soften. You don't need to hold it in. Just let it be. Soft belly.
+Let your belly soften. You don't need to hold it in. Just let it be.
 
 Let your lower back release. Let your mid-back soften. Let your shoulder blades drop down and away from your ears.
 
 [Pause.]
 
-Now your shoulders. Let them fall. And again — let them fall a little further than you think they can.
+Your shoulders. Let them fall. And again — let them fall a little further than you think they can.
 
 Your upper arms... forearms... hands. Let your hands be completely open and heavy in your lap. Nothing to hold.
 
-Your neck. Gently let your head find its natural balance point. Not held forward, not held back. Just... resting.
+Your neck — gently let your head find its natural balance point. Not held forward, not held back. Just resting.
 
 Let your jaw unclench. Let your tongue drop from the roof of your mouth. Let your forehead smooth out.
 
 [Long pause — 10 seconds.]
 
-Good. Right there. You're doing beautifully.
+Good. Right there.
 
 You are here. You are safe. Your body is beginning to remember what it feels like to not have to be on guard."`,
-    coachNotes: `Speak slowly — much more slowly than feels natural. Pause between body regions. Watch for the moment the client's shoulders actually drop — that's the signal they've landed. If they're visibly tense, linger longer. You can gently say: "And if there's any place still holding on... just let it know it can rest for now."`,
-    followUpQuestions: [
-      "Where are you noticing your body still holding something?",
-      "What did it feel like when your shoulders finally dropped?",
-      "Is there a part of your body that feels reluctant to soften?",
-      "What does your body feel like right now compared to when you walked in?",
-    ],
+    coachNotes: `Speak slowly — much more slowly than feels natural. Pause between body regions. Watch for the moment the client's shoulders actually drop — that's the signal they've landed. If they remain visibly tense, linger longer on that area. You can add: "And if there's any place still holding on... just let it know it can rest for now."`,
   },
   {
     id: 3,
     title: "Grounding",
     subtitle: "Crystal Core Alignment",
     duration: "3–5 min",
+    isRelaxation: true,
     clientFocus: "You are rooted. You are held. The earth has you.",
-    coachScript: `"Now, with your eyes still closed, bring your attention to the soles of your feet.
+    coachScript: `"With your eyes still closed, bring your attention to the soles of your feet.
 
-Imagine that from the soles of your feet, roots are beginning to grow downward. Not forcefully — naturally, like a tree that's been here for a very long time. Down through the floor. Down through the foundation of this building. Down through the layers of rock and earth.
+Imagine that from the soles of your feet, roots are beginning to grow downward. Not forcefully — naturally, like a tree that has been here for a very long time.
+
+Down through the floor. Down through the foundation of this building. Down through layers of rock and soil and ancient earth.
 
 These roots go deep. They are yours. They connect you to something steady, something that has been here long before any of your pain — and will be here long after it moves through.
 
 [Pause.]
 
-And now, imagine a column of light running through the very centre of your body. From the crown of your head, all the way down through your spine, down through your feet, into the earth below.
+Now imagine a column of light — clear, crystalline light — running through the very centre of your body. From the crown of your head, all the way down through your spine, down through your feet, and deep into the earth below.
 
-This is your crystal core — clear, steady, luminous. It cannot be shaken. It is the part of you that has always been whole, even when nothing else felt that way.
+This is your crystal core. Steady. Luminous. It cannot be shaken. This is the part of you that has always been whole, even when nothing else felt that way.
 
-Let yourself rest on that column of light right now. It is holding you.
+Let yourself rest on that column right now. It is holding you.
 
-[Pause 10 seconds.]
+[Pause 15 seconds.]
 
-You are not alone in this room. You are not alone in your body. The earth has you. And I have you. We can go deeper now."`,
-    coachNotes: `This step is about establishing safety before the inner work begins. If a client has a trauma history or dissociation pattern, they may find visualisation difficult — simply invite them to feel the physical weight of their body on the chair instead. "Ground" is about "I am here, I am held" — not about being perfect at visualisation.`,
-    followUpQuestions: [
-      "What does it feel like to imagine yourself as rooted right now?",
-      "Does the crystal core feel clear or is there anything clouding it?",
-      "What part of your body feels most grounded right now?",
-      "Is there a part of you that doesn't want to be held? That's okay — what does that part need?",
-    ],
+You are not alone in this room. You are not alone in your body. The earth has you. I have you. We can go deeper now."`,
+    coachNotes: `This establishes felt safety before inner work begins. If a client has a trauma or dissociation history, visualisation may be difficult — simply invite them to feel the physical weight of their body on the chair instead. Stay with the physical before the imaginal.`,
   },
   {
     id: 4,
     title: "Quieting the Mind",
     subtitle: "10-Step Descent",
     duration: "3–5 min",
+    isRelaxation: true,
     clientFocus: "10... 9... 8... Deeper with each breath...",
-    coachScript: `"Now I'm going to count down from 10 to 1. With each number, with each breath, you're going to travel a little deeper into yourself. Deeper into stillness. Deeper into the truth of what's here.
+    coachScript: `"Now I'm going to count down from 10 to 1. With each number, with each breath, you'll travel a little deeper into yourself. Deeper into stillness. Deeper into the truth of what is here.
 
 You don't need to do anything. The numbers will carry you.
 
-[Speak each number on an exhale. Slow. Deliberate.]
+[Speak each number on an exhale. Slow. Deliberate. 4–5 seconds between each.]
 
 10... breathing out... feeling the body relax a little more.
 
@@ -151,7 +145,7 @@ You don't need to do anything. The numbers will carry you.
 
 6... halfway down... feel how much quieter it's getting.
 
-5... your body completely supported now... your mind settling like water becoming still.
+5... your body completely supported... your mind settling like water becoming still.
 
 4... almost there. Any tension remaining... just let it soften.
 
@@ -161,54 +155,68 @@ You don't need to do anything. The numbers will carry you.
 
 1... here. You're here. Welcome to the quiet inside yourself.
 
-[Long pause — 15 seconds of complete silence.]
+[Silence — hold for 15 full seconds. Do not speak.]
 
 From this place, we're going to meet what's true."`,
-    coachNotes: `The countdown is not about hypnosis — it's about rhythmically signalling the nervous system to downregulate. The silence after "1" is important. Don't rush it. Some clients will have thoughts arise and feel they're "failing" — remind them that noticing thoughts IS the practice. The thoughts are not the enemy.`,
-    followUpQuestions: [
-      "What's the quality of this stillness for you right now?",
-      "Did anything surface during the countdown that wants your attention?",
-      "What does quiet feel like in your body?",
-    ],
+    coachNotes: `The countdown rhythmically signals the nervous system to downregulate. The silence after "1" is critical — don't fill it. Some clients will fidget or open their eyes; gently say "just stay with me" if needed. If they mention thoughts arising, normalise: "That's perfect. Noticing is the practice."`,
   },
   {
     id: 5,
     title: "Meeting What's Here",
-    subtitle: "Inner Encounter",
-    duration: "3–5 min",
+    subtitle: "Inner Encounter + Intuition",
+    duration: "5–8 min",
+    hasCoachNotes: true,
     clientFocus: "Who or what is here to meet you today?",
     coachScript: `"From this quiet place, I'd like you to gently look inward.
 
 Not searching. Not forcing. Just... noticing.
 
-Is there a feeling here? A presence? Something that's been waiting to be seen?
-
-Maybe it's an emotion. Maybe it's an image — a younger version of yourself, or just a sense of something.
-
-Whatever is here... let it be exactly what it is. You don't need to understand it. You don't need to change it. Just... acknowledge it.
+Is there a feeling here? A presence? Something that has been waiting to be seen?
 
 [Pause — 15 seconds.]
 
-Can you tell me what you're noticing? What's present for you right now?
+Can you tell me what you're noticing?
 
-[Let them speak. Don't interpret. Reflect.]
+[Let them speak. Don't interpret. Reflect back what they say.]
 
-Good. So there's [repeat back what they said] here with you.
+Good. So there is [repeat back] here with you.
 
-Can you turn toward it? Not away from it — toward it. Like you're turning to face someone who's been standing behind you for a very long time.
+Now, I'd like to invite you to meet your intuition — that wise, calm part of you that always knows.
 
-What happens when you do that?
+Imagine stepping into a place inside yourself where your intuition lives. It might appear as a light, a figure, a feeling — whatever arises naturally.
 
-[Pause. Let them respond.]
+What do you notice?
 
-Stay with that. We're going to go deeper into it."`,
-    coachNotes: `This step often produces the first emotional response of the session. If they cry, let them — don't rush to comfort or fix. A gentle "that's it, let it move through" is enough. The inner child often appears here, but not always — sometimes it's a feeling (grief, rage, numbness), sometimes an image. Follow what they bring, not what you expect.`,
+[Pause. Let them describe.]
+
+Ask your intuition: "What do I most need to know today?"
+
+[Long pause — let them receive.]
+
+What did you hear, or sense, or feel?
+
+[Reflect back.]
+
+Thank you. Carry that with you.
+
+Now, is there also an inner child present? A younger version of you? Just notice — don't search for it.
+
+[Pause.]
+
+What do you see or feel?
+
+[Let them respond.]
+
+Can you turn toward whatever is here? Not away from it — toward it. Like turning to face someone who has been standing behind you for a very long time.
+
+What happens in your body when you do that?"`,
+    coachNotes: `This step often produces the first emotional opening. If they cry, let them — don't rush to comfort. A quiet "that's it, let it move through" is enough. The intuition question is important before moving to the wound work — it activates the wiser, witnessing self, not just the wounded self. If no inner child appears, don't force it. Work with whatever does arrive.`,
     followUpQuestions: [
       "How old does this feel? Does it have an age?",
-      "Have you met this part of yourself before?",
-      "What is it doing when you turn toward it? Is it reaching toward you, or moving away?",
-      "What does it most need you to know right now?",
+      "What is it doing when you turn toward it? Is it reaching toward you or moving away?",
       "What does it feel like in your chest when you acknowledge it directly?",
+      "What does your intuition want you to remember as we go deeper?",
+      "Have you met this part of yourself before?",
     ],
   },
   {
@@ -216,97 +224,111 @@ Stay with that. We're going to go deeper into it."`,
     title: "Finding the Energy",
     subtitle: "Somatic Locating",
     duration: "5–8 min",
-    clientFocus: "Where does this live in your body?",
     hasBodyMap: true,
     hasEnergySelector: true,
-    coachScript: `"Now I'd like you to bring your awareness to your body.
+    clientFocus: "Where does this live in your body?",
+    coachScript: `"Now bring your awareness to your body.
 
 Where does this [emotion / presence / feeling] actually live in your physical body? Don't think about it — just feel. Where are you drawn?
 
-[Pause.]
+[Pause. Let them locate it. They can point if that helps.]
 
-Point to it if you like, or just notice it internally.
+Good. Stay there. Keep your full attention right on that spot.
 
-[Let them respond.]
-
-Good. Stay there. Keep your attention right on that spot.
-
-Now, if this energy had a colour — not the colour it should be, just the colour it is — what colour do you see or sense?
+Now — if this energy had a colour — not the colour it should be, just the colour it is — what colour do you see or sense?
 
 [Pause. Let them name it.]
 
-And if it had a shape — a texture, a density — what would that be? Is it sharp, or dense, or scattered, or hollow?
+And if it had a shape, a texture, a density — what would that be? Is it sharp? Dense? Scattered? Hollow?
 
-[Pause. Let them describe.]
+[Pause. Let them describe it in their own words.]
 
-And if you had to guess at its size — is it the size of a fist? A stone? A room?
+And roughly what size? The size of a fist? A stone? Something larger?
 
 [Pause.]
 
-So we have [their colour] energy, shaped like [their description], sitting in your [body location].
+So we have [their colour] energy, [their shape], in your [body location].
 
-Just be with that for a moment. Don't try to change it. Just acknowledge it.
+Just be with that for a moment. Don't try to change it. Just acknowledge: this is here.
 
-This energy has been here a long time, carrying something for you. We're going to listen to it now."`,
-    coachNotes: `The somatic locating is the bridge between story and body. Some clients will go abstract ("I feel sad") — gently redirect: "Where in your body does sad live? If you put your hand there, where would you put it?" Don't rush the colour/shape/size — these sensory details help the subconscious mind engage. They're not metaphors for the client; they're real.`,
+This energy has been in your body a long time. It has been carrying something for you. We're going to listen to it now."`,
+    coachNotes: `If the client stays abstract ("I feel sad"), redirect: "Where in your body does sad live? If you put your hand there right now, where would you put it?" The colour, shape, and size engage the subconscious. These aren't metaphors to them — they're real. Follow their language exactly, not yours.`,
     followUpQuestions: [
       "Does the colour change as you look at it more closely?",
       "What happens to the energy when you breathe directly into it?",
-      "Does it have a temperature? Hot, cold, warm?",
+      "Does it have a temperature — hot, cold, warm?",
+      "How long has this been living in your body?",
       "Is it moving or is it still?",
-      "How long has this been living in your body? If it knew, what would it say?",
     ],
   },
   {
     id: 7,
     title: "Listening",
     subtitle: "Energy Dialogue",
-    duration: "8–12 min",
+    duration: "10–15 min",
+    hasCoachNotes: true,
     clientFocus: "Let it speak. You are listening without judgment.",
     reflection: "What did the energy say? What does it want to release?",
-    coachScript: `"Now I'd like you to speak to this energy. Not in your head — out loud, here with me.
+    coachScript: `"I'd like you to speak to this energy. Not in your head — out loud, here with me.
 
-You can say: 'I see you. I know you're here. I'm listening.'
+Say: 'I see you. I know you're here. I'm listening.'
 
-[Pause while they say it or repeat it back silently.]
+[Pause while they say it.]
 
-Good. Now, I'd like you to ask it: 'What are you here to protect?'
+Now I'm going to ask you to put this question directly to the energy. Say it out loud to it:
 
-[Long pause — let them receive and respond.]
+'What is the one thing you would like me to know so that you can easily and effortlessly leave my body?'
 
-[Reflect back what they said without judgment.]
+[Long pause — 15 to 20 seconds. Hold the silence. Let them receive.]
 
-Thank you. Stay with it.
+What came?
 
-Now ask it: 'What do you most need me to know?'
+[If they say nothing:]
+"That's okay. Try this: 'If you were to know — what might it be?'
 
-[Long pause.]
+[Wait again. Even a whisper is enough.]
 
-[Reflect back.]
+[Reflect back exactly what they said.]
 
-And now this one: 'What has carrying this cost you?'
+Good. Stay with that.
+
+Now ask it: 'What are you here to protect?'
+
+[Pause. Let them respond.]
+
+[If the answer is negative (e.g. 'I don't want to be hurt') ask:]
+'What do you want instead? And when you have that — what do you have?'
+
+[If the answer is a thought (e.g. 'I need to be careful') ask:]
+'When you know that, what will you have?'
+
+[If the answer is a label or identity (e.g. 'I'm unlovable') ask:]
+'What are the qualities and characteristics of someone who is [that label]?'
+
+[Pause after each response. Reflect. Don't interpret.]
+
+Now ask it: 'Who put this energy here? Was it your ego, your inner critic, or your inner child?'
+
+[Pause.]
+
+And finally: 'What has carrying this cost you?'
 
 [Long pause. This often produces deep emotion. Let it move.]
 
 [If tears arise: "That's it. Let it move. You're doing beautifully."]
 
-And finally — ask it: 'What would you like to release? What are you ready to let go of?'
-
-[Long pause.]
-
-[Reflect back.]
-
-You've just given this part of yourself something it may never have received: your full attention. Your willingness to listen without needing it to be different.
+You have just given this part of yourself something it may never have received before: your full, undivided attention. Your willingness to listen without needing it to be different.
 
 That is profound. That is love."`,
-    coachNotes: `This is the heart of the session. Resist the urge to interpret, analyse, or guide toward a particular answer. Your job is to hold space for what is true — not what you think should be true. If the client says "I don't know what it wants" — that's okay. Ask: "If it did know, what might it say?" The energy often has very practical things to say (protection, anger, grief, longing). All of it is valid. None of it is wrong.`,
+    coachNotes: `This is the heart of the session. The "one thing you'd like me to know" question is the most important in the entire protocol — don't rush past it. Repeat it gently if needed. The "If you were to know?" fallback almost always unlocks something. Resist the urge to interpret or fix what comes up. Your job is only to hold the space and reflect back. All answers are valid. None are wrong.`,
     followUpQuestions: [
-      "What surprised you in what it said?",
-      "Did any part of what it said land in your body in a different way?",
-      "Is there anything it said that part of you is resisting?",
-      "What does it feel like to actually listen to this part of you rather than push it away?",
-      "Is there anything it needs to hear from you before it can release?",
-      "What would it mean to no longer need this protection?",
+      "'What is the one thing you would like me to know so you can easily and effortlessly leave my body?' (repeat if needed)",
+      "'If you were to know — what might it be?' (use if no response)",
+      "If answer is negative: 'What do you want instead? And when you have that, what do you have?'",
+      "If answer is a thought: 'When you know this, what will you have?'",
+      "If answer is a label/identity: 'What are the qualities and characteristics of [that label]?'",
+      "'Who put this energy here — was it your ego, your inner critic, or your inner child?'",
+      "'What would it mean to no longer need this protection?'",
     ],
   },
   {
@@ -320,9 +342,9 @@ That is profound. That is love."`,
 
 Now I'd like to invite a transformation — not a forced release, not an 'I'm done with you' — but a gentle, willing shift.
 
-Bring your attention back to that energy in your body. The [colour], the [shape], in your [location].
+Bring your attention back to that energy in your body. The [their colour], [their shape], in your [location].
 
-Now, as you breathe in, imagine breathing light directly into that energy. Warm, clear, golden light. Not to destroy it — but to honour it. To fill it with something it's been missing.
+As you breathe in, imagine breathing warm, clear light directly into that energy. Not to destroy it — to honour it. To fill it with something it has been missing.
 
 [Pause.]
 
@@ -332,28 +354,25 @@ With each exhale, allow just a little of what no longer serves you to leave. You
 
 Watch what happens to the colour. Does it change? Does the shape shift?
 
-[Pause. Let them respond.]
+[Pause. Let them describe what they notice.]
 
 What's happening in your body right now?
 
-[Let them describe.]
+[Let them speak.]
 
 Now imagine that energy transforming — not disappearing, but changing form. What does it want to become? A colour of light? A warmth? A sense of spaciousness where there was once density?
 
-[Pause.]
+[Pause — hold 15 seconds.]
 
 Let it transform into whatever it naturally becomes. You're not creating this — you're witnessing it.
 
-[Long pause — 15 seconds.]
-
 What do you notice now in your body where that energy used to be?"`,
-    coachNotes: `Some clients will feel a dramatic release — warmth, tingling, tears, deep breath. Others will feel a subtle shift or "nothing yet." Both are valid. Transformation doesn't always feel loud. If they say nothing changed, ask: "Is there anything that changed even slightly? Even a 5% shift counts." The visualisation of the energy changing form is important — it signals to the nervous system that something is different now.`,
+    coachNotes: `Some clients feel a dramatic release — warmth, tingling, tears, deep breath. Others feel a subtle shift or "nothing yet." Both are valid. If they say nothing changed, ask: "Is there anything that shifted even slightly? Even 5% counts." Don't judge the depth of the release — the nervous system registers it even when the mind doesn't have language for it yet.`,
     followUpQuestions: [
       "What did it transform into?",
       "Where in your body do you feel the most spaciousness right now?",
       "Is there any residue — any echo of the old energy still present?",
       "What would it take for that residue to transform too?",
-      "If this shift has a colour now — what colour is it?",
       "What does your body want to do with this new feeling?",
     ],
   },
@@ -370,15 +389,13 @@ From this place — this body, this breath, this shift — I want you to see you
 
 You've been doing this work. You've been showing up. What does your life look like?
 
-What does your relationship with yourself feel like? Your relationships with others? The way you move through the world?
+What does your relationship with yourself feel like? Your relationships with others?
 
 [Pause — 15 seconds. Let them really see it.]
 
 What do you notice? What's different?
 
 [Let them respond.]
-
-Good. Stay with that.
 
 Now six months forward. The shift that happened today has had time to root and grow. What's possible now that wasn't possible before?
 
@@ -390,21 +407,18 @@ What do you see? What do you feel?
 
 And now one year from now. This version of you — who has done this work, who has listened to the parts of themselves that needed to be heard — what does that person's life look like?
 
-What do they have that the person who walked in here today was still longing for?
+What do they have that the person who walked in today was still longing for?
 
 [Long pause — 15 seconds.]
 
 Take a moment to really inhabit that future self. Feel what they feel. Stand where they stand.
 
-[Pause.]
-
 What does that person most want you to know?"`,
-    coachNotes: `The future visioning locks in the neurological pattern change. It's not about creating fantasy — it's about the nervous system experiencing (in the present tense) what safety, wholeness, or love actually feels like. If the client struggles to see a positive future ("I can't imagine that"), that is itself important data. Ask: "What's blocking the vision? Let's meet that."`,
+    coachNotes: `The future visioning integrates the neurological pattern change. It's not fantasy — it's the nervous system experiencing (in present tense) what safety and wholeness actually feel like. If the client struggles to see a positive future, that is itself important data. Ask: "What's blocking the vision? Let's meet that."`,
     followUpQuestions: [
       "What surprised you about what you saw?",
       "What does that future version of you want to say to who you are today?",
-      "What is the single most important thing that shifted in your future vision?",
-      "What would it take to close the gap between who you are now and who you saw?",
+      "What is the single most important thing that shifted in that vision?",
       "What did you notice in your body as you visited that future self?",
       "Is there a relationship in your life that looks completely different in that future?",
     ],
@@ -420,7 +434,7 @@ What does that person most want you to know?"`,
     reflection: "What inspired actions did they name?",
     coachScript: `"Beautiful. It's time to gently come back.
 
-I'm going to count from 1 to 5. With each number, you're going to return — slowly, gently — carrying everything from this session with you. Nothing is left behind. Everything that shifted stays shifted.
+I'm going to count from 1 to 5. With each number you're going to return — slowly, gently — carrying everything from this session with you. Nothing is left behind. Everything that shifted stays shifted.
 
 1... beginning to come back. Feeling your breath in your body.
 
@@ -432,35 +446,35 @@ I'm going to count from 1 to 5. With each number, you're going to return — slo
 
 5... eyes gently open whenever you're ready. Welcome back.
 
-[Long pause. Let them orient.]
-
-[Pause in silence — don't rush to words. Let them arrive.]
+[Long pause. Let them fully orient. Don't rush to words. Let them arrive.]
 
 How are you feeling right now?
 
 [Let them respond without interruption.]
 
-And that number we started with — the intensity you named at the beginning — where does it feel like it's sitting now? On a scale of 1 to 10?
+And that number we started with — where does it feel like it's sitting now?
 
-[Record the closing number.]
+[Record the closing number. Note the shift.]
 
-[If it dropped: "That's real. What happened in your body today was real."]
-[If it stayed: "That's okay. The work you did today has been heard. The shift is still in motion."]
+[If it dropped:]
+"That's real. What happened in your body today was real."
+
+[If unchanged:]
+"That's okay. The work you did today has been heard. The shift is still in motion — sometimes it lands tonight, sometimes in how you respond to something tomorrow."
 
 Now, from everything that moved in this session — what one action is calling to you? Not a should, not what you think you ought to do. What actually wants to happen next?
 
-[Let them name it. Reflect it back as exactly as they said it.]
+[Let them name it. Reflect it back in exactly their words.]
 
-Write that down. That's yours. That's what this session is asking you to do.
+That's yours. That's what this session is asking you to do.
 
 Thank you for trusting this process — and for trusting yourself enough to go here today. That was brave."`,
-    coachNotes: `The closing scale drop is important — record it for the report. If the number dropped even 1–2 points, that is meaningful. If it didn't drop, normalise it: "Sometimes the shift doesn't show up in the number right away — it lands later, in dreams, in how you respond to something tomorrow." The inspired action must come from THEM, not from you. Even if it sounds small. Especially if it sounds small.`,
+    coachNotes: `The closing scale drop matters — even 1 point is meaningful. The inspired action must come from them, not you. Even if it sounds small. Especially if it sounds small. The client's own language is what lands. Repeat it back exactly as they said it.`,
     followUpQuestions: [
       "What feels most different in your body now compared to when we started?",
       "What do you most want to remember from today?",
-      "Is there anything that surprised you about what came up?",
-      "What support do you need this week as this continues to integrate?",
       "What would be the first sign that the shift from today is alive in your daily life?",
+      "What support do you need this week as this continues to integrate?",
       "What does your body want you to know before you leave this space today?",
     ],
   },
@@ -491,13 +505,13 @@ export const ENERGY_SHAPES = [
 ];
 
 export const BODY_REGIONS = [
-  { id: "head", label: "Head / Mind", x: 48, y: 4 },
-  { id: "throat", label: "Throat", x: 48, y: 14 },
-  { id: "chest", label: "Chest / Heart", x: 48, y: 24 },
-  { id: "shoulders", label: "Shoulders", x: 48, y: 20 },
-  { id: "stomach", label: "Stomach / Solar Plexus", x: 48, y: 34 },
-  { id: "gut", label: "Gut / Sacral", x: 48, y: 44 },
-  { id: "hips", label: "Hips / Pelvis", x: 48, y: 53 },
-  { id: "legs", label: "Legs", x: 48, y: 68 },
-  { id: "jaw", label: "Jaw / Face", x: 48, y: 10 },
+  { id: "head", label: "Head / Mind" },
+  { id: "jaw", label: "Jaw / Face" },
+  { id: "throat", label: "Throat" },
+  { id: "chest", label: "Chest / Heart" },
+  { id: "shoulders", label: "Shoulders" },
+  { id: "stomach", label: "Stomach / Solar Plexus" },
+  { id: "gut", label: "Gut / Sacral" },
+  { id: "hips", label: "Hips / Pelvis" },
+  { id: "legs", label: "Legs" },
 ];
